@@ -235,6 +235,14 @@ export default class Masonry extends React.Component {
         let loadMore = this.props.infinite ?
             (this.props.renderInfinite ? this.props.renderInfinite(this.state.infiniting) : <LoadMore loading={this.state.infiniting}/>)
             : null;
+        const {
+          ListEmptyComponent,
+          ListFooterComponent,
+          ListHeaderComponent,
+        } = this.props;
+        const headerElement = React.isValidElement(ListHeaderComponent) ? (
+            ListHeaderComponent
+          ) : (null);
 
         return (
             <ScrollView
@@ -250,6 +258,7 @@ export default class Masonry extends React.Component {
                     this.props.infinite ? this._onInfinite.bind(this) : null
                 }
                 scrollEventThrottle={100}>
+                {headerElement}
                 <View style={[{flexDirection: "row"}, this.props.containerStyle]}>
                     {this.state.columns.map( ( col, index ) => {
                         return <Column
